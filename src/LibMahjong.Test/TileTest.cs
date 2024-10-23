@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using LibMahjong.Tiles;
 
 namespace LibMahjong.Test;
 
@@ -297,6 +298,50 @@ public class TileTest
         Assert.False(Tile.Nan.IsDragon);
         Assert.False(Tile.Sha.IsDragon);
         Assert.False(Tile.Pei.IsDragon);
+    }
+
+    [Fact]
+    public void IsSuit_True()
+    {
+        Assert.True(Tile.Man1.IsSuit);
+        Assert.True(Tile.Man2.IsSuit);
+        Assert.True(Tile.Man3.IsSuit);
+        Assert.True(Tile.Man4.IsSuit);
+        Assert.True(Tile.Man5.IsSuit);
+        Assert.True(Tile.Man6.IsSuit);
+        Assert.True(Tile.Man7.IsSuit);
+        Assert.True(Tile.Man8.IsSuit);
+        Assert.True(Tile.Man9.IsSuit);
+        Assert.True(Tile.Pin1.IsSuit);
+        Assert.True(Tile.Pin2.IsSuit);
+        Assert.True(Tile.Pin3.IsSuit);
+        Assert.True(Tile.Pin4.IsSuit);
+        Assert.True(Tile.Pin5.IsSuit);
+        Assert.True(Tile.Pin6.IsSuit);
+        Assert.True(Tile.Pin7.IsSuit);
+        Assert.True(Tile.Pin8.IsSuit);
+        Assert.True(Tile.Pin9.IsSuit);
+        Assert.True(Tile.Sou1.IsSuit);
+        Assert.True(Tile.Sou2.IsSuit);
+        Assert.True(Tile.Sou3.IsSuit);
+        Assert.True(Tile.Sou4.IsSuit);
+        Assert.True(Tile.Sou5.IsSuit);
+        Assert.True(Tile.Sou6.IsSuit);
+        Assert.True(Tile.Sou7.IsSuit);
+        Assert.True(Tile.Sou8.IsSuit);
+        Assert.True(Tile.Sou9.IsSuit);
+    }
+
+    [Fact]
+    public void IsSuit_False()
+    {
+        Assert.False(Tile.Ton.IsSuit);
+        Assert.False(Tile.Nan.IsSuit);
+        Assert.False(Tile.Sha.IsSuit);
+        Assert.False(Tile.Pei.IsSuit);
+        Assert.False(Tile.Haku.IsSuit);
+        Assert.False(Tile.Hatsu.IsSuit);
+        Assert.False(Tile.Chun.IsSuit);
     }
 
     [Fact]

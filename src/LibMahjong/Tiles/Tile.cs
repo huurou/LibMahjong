@@ -1,4 +1,4 @@
-﻿namespace LibMahjong;
+﻿namespace LibMahjong.Tiles;
 
 /// <summary>
 /// 牌 <para/>
@@ -179,6 +179,10 @@ public record Tile : IComparable<Tile>
     /// 三元牌かどうか
     /// </summary>
     public bool IsDragon => Id >= 31;
+    /// <summary>
+    /// 数牌かどうか
+    /// </summary>
+    public bool IsSuit => IsMan || IsPin || IsSou;
     /// <summary>
     /// 字牌かどうか
     /// </summary>
