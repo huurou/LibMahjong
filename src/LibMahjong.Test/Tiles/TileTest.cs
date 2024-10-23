@@ -1,7 +1,6 @@
-﻿using System.Reflection;
-using LibMahjong.Tiles;
+﻿using LibMahjong.Tiles;
 
-namespace LibMahjong.Test;
+namespace LibMahjong.Test.Tiles;
 
 public class TileTest
 {
