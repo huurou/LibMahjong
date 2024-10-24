@@ -217,6 +217,33 @@ public class TileListTest
     }
 
     [Fact]
+    public void Equals_参照が同じならTrue()
+    {
+        // Arrange
+        var tiles = new TileList([Tile.Man1, Tile.Man2, Tile.Man3]);
+
+        // Act
+        var actual = tiles.Equals(tiles);
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Fact]
+    public void Equals_nullならFalse()
+    {
+        // Arrange
+        var tiles = new TileList([Tile.Man1, Tile.Man2, Tile.Man3]);
+        TileList? other = null;
+
+        // Act
+        var actual = tiles.Equals(other);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Fact]
     public void CompareTo_LessThan_要素が異なる()
     {
         // Arrange
@@ -271,6 +298,7 @@ public class TileListTest
         // Assert
         Assert.True(actual > 0);
     }
+
     [Fact]
     public void CompareTo_Equal()
     {
@@ -282,7 +310,21 @@ public class TileListTest
         var actual = tiles.CompareTo(other);
 
         // Assert
-        Assert.True(actual == 0);
+        Assert.Equal(0, actual);
+    }
+
+    [Fact]
+    public void CompareTo_null()
+    {
+        // Arrange
+        var tiles = new TileList(man: "123");
+        TileList? other = null;
+
+        // Act
+        var actual = tiles.CompareTo(other);
+
+        // Assert
+        Assert.True(actual > 0);
     }
 }
 
