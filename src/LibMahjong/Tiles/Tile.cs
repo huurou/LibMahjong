@@ -145,6 +145,8 @@ public record Tile : IComparable<Tile>
     /// </summary>
     public static Tile Chun { get; } = new(33);
 
+    public static IEnumerable<Tile> All => Enumerable.Range(0, 34).Select(x => new Tile(x));
+
     /// <summary>
     /// 牌Id
     /// </summary>

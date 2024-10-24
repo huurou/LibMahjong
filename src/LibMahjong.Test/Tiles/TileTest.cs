@@ -26,6 +26,22 @@ public class TileTest
     }
 
     [Fact]
+    public void All()
+    {
+        // Act
+        var actual = Tile.All;
+
+        // Assert
+        IEnumerable<Tile> expected = [
+            Tile.Man1, Tile.Man2, Tile.Man3, Tile.Man4, Tile.Man5, Tile.Man6, Tile.Man7, Tile.Man8, Tile.Man9,
+            Tile.Pin1, Tile.Pin2, Tile.Pin3, Tile.Pin4, Tile.Pin5, Tile.Pin6, Tile.Pin7, Tile.Pin8, Tile.Pin9,
+            Tile.Sou1, Tile.Sou2, Tile.Sou3, Tile.Sou4, Tile.Sou5, Tile.Sou6, Tile.Sou7, Tile.Sou8, Tile.Sou9,
+            Tile.Ton, Tile.Nan, Tile.Sha, Tile.Pei, Tile.Haku, Tile.Hatsu, Tile.Chun,
+        ];
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
     public void Number()
     {
         Assert.Equal(1, Tile.Man1.Number);
@@ -822,7 +838,6 @@ public class TileTest
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-
     }
 }
 
