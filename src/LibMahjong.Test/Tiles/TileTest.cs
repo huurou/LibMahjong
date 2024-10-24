@@ -769,6 +769,61 @@ public class TileTest
         // Assert
         Assert.True(actual);
     }
+
+    [Fact]
+    public void ToString_成功()
+    {
+        Assert.Equal("一", Tile.Man1.ToString());
+        Assert.Equal("二", Tile.Man2.ToString());
+        Assert.Equal("三", Tile.Man3.ToString());
+        Assert.Equal("四", Tile.Man4.ToString());
+        Assert.Equal("五", Tile.Man5.ToString());
+        Assert.Equal("六", Tile.Man6.ToString());
+        Assert.Equal("七", Tile.Man7.ToString());
+        Assert.Equal("八", Tile.Man8.ToString());
+        Assert.Equal("九", Tile.Man9.ToString());
+        Assert.Equal("(1)", Tile.Pin1.ToString());
+        Assert.Equal("(2)", Tile.Pin2.ToString());
+        Assert.Equal("(3)", Tile.Pin3.ToString());
+        Assert.Equal("(4)", Tile.Pin4.ToString());
+        Assert.Equal("(5)", Tile.Pin5.ToString());
+        Assert.Equal("(6)", Tile.Pin6.ToString());
+        Assert.Equal("(7)", Tile.Pin7.ToString());
+        Assert.Equal("(8)", Tile.Pin8.ToString());
+        Assert.Equal("(9)", Tile.Pin9.ToString());
+        Assert.Equal("1", Tile.Sou1.ToString());
+        Assert.Equal("2", Tile.Sou2.ToString());
+        Assert.Equal("3", Tile.Sou3.ToString());
+        Assert.Equal("4", Tile.Sou4.ToString());
+        Assert.Equal("5", Tile.Sou5.ToString());
+        Assert.Equal("6", Tile.Sou6.ToString());
+        Assert.Equal("7", Tile.Sou7.ToString());
+        Assert.Equal("8", Tile.Sou8.ToString());
+        Assert.Equal("9", Tile.Sou9.ToString());
+        Assert.Equal("東", Tile.Ton.ToString());
+        Assert.Equal("南", Tile.Nan.ToString());
+        Assert.Equal("西", Tile.Sha.ToString());
+        Assert.Equal("北", Tile.Pei.ToString());
+        Assert.Equal("白", Tile.Haku.ToString());
+        Assert.Equal("發", Tile.Hatsu.ToString());
+        Assert.Equal("中", Tile.Chun.ToString());
+    }
+
+    [Fact]
+    public void ToString_失敗()
+    {
+        // Arrange
+        var tile = new Tile(0);
+        var propInfo = typeof(Tile).GetProperty("Id");
+        propInfo?.SetValue(tile, -1);
+
+        // Act
+        var ex = Record.Exception(() => _ = tile.ToString());
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+
+    }
 }
 
 // Arrange
