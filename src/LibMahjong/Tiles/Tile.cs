@@ -145,7 +145,12 @@ public record Tile : IComparable<Tile>
     /// </summary>
     public static Tile Chun { get; } = new(33);
 
-    public static IEnumerable<Tile> All => Enumerable.Range(0, 34).Select(x => new Tile(x));
+    public static IEnumerable<Tile> All { get; } = Enumerable.Range(0, 34).Select(x => new Tile(x));
+    public static IEnumerable<Tile> Mans { get; } = All.Where(x => x.IsMan);
+    public static IEnumerable<Tile> Pins { get; } = All.Where(x => x.IsPin);
+    public static IEnumerable<Tile> Sous { get; } = All.Where(x => x.IsSou);
+    public static IEnumerable<Tile> Honors { get; } = All.Where(x => x.IsHonor);
+    public static IEnumerable<Tile> Yaochuus { get; } = All.Where(x => x.IsYaochuu);
 
     /// <summary>
     /// 牌Id

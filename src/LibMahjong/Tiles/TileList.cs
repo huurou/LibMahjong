@@ -35,11 +35,13 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
     public bool IsKantsu => Count == 4 && this[1..].All(x => this[0] == x);
 
     private readonly ImmutableList<Tile> tiles_ = [];
+    private readonly ImmutableArray<int> counts_ = [];
 
     public TileList(IEnumerable<Tile> tiles)
     {
-        if (tiles.Any(x => tiles.Count(y => x == y) >= 5)) { throw new ArgumentException("同じ牌は4枚までです。", nameof(tiles)); }
+        if (tiles.Any(x => tiles.Count(y => y == x) > 4)) { throw new ArgumentException("同じ牌は4枚までです。", nameof(tiles)); }
         tiles_ = [.. tiles];
+        counts_ = [.. Tile.All.Select(x => tiles.Count(y => y == x))];
     }
 
     public TileList(string man = "", string pin = "", string sou = "", string honor = "") : this(
@@ -53,12 +55,9 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
     {
     }
 
-    public TileList(CountArray countArray)
+    public int CountOf(Tile tile)
     {
-        for (var id = 0; id < 34; id++)
-        {
-            tiles_ = tiles_.AddRange(Enumerable.Repeat(new Tile(id), countArray[id]));
-        }
+        return counts_[tile.Id];
     }
 
     public TileList Add(Tile tile)
@@ -68,12 +67,12 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
 
     public TileList GetIsolations()
     {
-        return ToCountArray().GetIsolations();
-    }
-
-    public CountArray ToCountArray()
-    {
-        return new(this);
+        return new(Tile.All.Where(
+            x => x.IsHonor && CountOf(x) == 0 ||
+                !x.IsHonor && x.Number == 1 && counts_[x.Id] == 0 && counts_[x.Id + 1] == 0 ||
+                !x.IsHonor && x.Number is >= 2 and <= 8 && counts_[x.Id - 1] == 0 && CountOf(x) == 0 && counts_[x.Id + 1] == 0 ||
+                !x.IsHonor && x.Number == 9 && counts_[x.Id - 1] == 0 && CountOf(x) == 0
+        ));
     }
 
     public override string ToString()

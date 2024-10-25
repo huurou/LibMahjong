@@ -203,20 +203,6 @@ public class TileListTest
     }
 
     [Fact]
-    public void ToCountArray()
-    {
-        // Arrange
-        var tiles = new TileList(man: "12233344446789", pin: "123455666777788889", sou: "123456778889999", honor: "1123334555567");
-
-        // Act
-        var actual = tiles.ToCountArray();
-
-        // Assert
-        var expected = new CountArray([1, 2, 3, 4, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 2, 1, 3, 1, 4, 1, 1]);
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
     public void GetIsolations()
     {
         // Arrange
