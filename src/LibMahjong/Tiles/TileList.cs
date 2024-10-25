@@ -34,7 +34,7 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
     /// </summary>
     public bool IsKantsu => Count == 4 && this[1..].All(x => this[0] == x);
 
-    private readonly ImmutableList<Tile> tiles_;
+    private readonly ImmutableList<Tile> tiles_ = [];
 
     public TileList(IEnumerable<Tile> tiles)
     {
@@ -51,6 +51,34 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
         ]
     )
     {
+    }
+
+    public TileList(CountArray countArray)
+    {
+        for (var id = 0; id < 34; id++)
+        {
+            tiles_ = tiles_.AddRange(Enumerable.Repeat(new Tile(id), countArray[id]));
+        }
+    }
+
+    public TileList Add(Tile tile)
+    {
+        return new(tiles_.Add(tile));
+    }
+
+    public TileList GetIsolations()
+    {
+        return ToCountArray().GetIsolations();
+    }
+
+    public CountArray ToCountArray()
+    {
+        return new(this);
+    }
+
+    public override string ToString()
+    {
+        return string.Join("", this);
     }
 
     public IEnumerator<Tile> GetEnumerator()
