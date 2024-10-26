@@ -65,6 +65,16 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
         return new(tiles_.Add(tile));
     }
 
+    public TileList Remove(Tile tile, int count = 1)
+    {
+        var tiles = tiles_;
+        for (var i = 0; i < count; i++)
+        {
+            tiles = tiles.Remove(tile);
+        }
+        return new(tiles);
+    }
+
     public TileList GetIsolations()
     {
         return new(Tile.All.Where(
@@ -73,6 +83,11 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
                 !x.IsHonor && x.Number is >= 2 and <= 8 && counts_[x.Id - 1] == 0 && CountOf(x) == 0 && counts_[x.Id + 1] == 0 ||
                 !x.IsHonor && x.Number == 9 && counts_[x.Id - 1] == 0 && CountOf(x) == 0
         ));
+    }
+
+    public bool IsAgari()
+    {
+        return Agari.IsAgari(this);
     }
 
     public override string ToString()
