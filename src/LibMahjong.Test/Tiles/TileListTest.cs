@@ -203,16 +203,64 @@ public class TileListTest
     }
 
     [Fact]
+    public void CountOf()
+    {
+        // Arrange
+        var tiles = new TileList(man: "1111222334");
+
+        // Act
+        var actual1 = tiles.CountOf(Tile.Man1);
+        var actual2 = tiles.CountOf(Tile.Man2);
+        var actual3 = tiles.CountOf(Tile.Man3);
+        var actual4 = tiles.CountOf(Tile.Man4);
+        var actual5 = tiles.CountOf(Tile.Man5);
+
+        // Assert
+        Assert.Equal(4, actual1);
+        Assert.Equal(3, actual2);
+        Assert.Equal(2, actual3);
+        Assert.Equal(1, actual4);
+        Assert.Equal(0, actual5);
+    }
+
+    [Fact]
+    public void Add()
+    {
+        // Arrange
+        var tiles = new TileList(man: "123");
+
+        // Act
+        var actual = tiles.Add(Tile.Man4);
+
+        // Assert
+        Assert.Equal(new TileList(man: "123"), tiles); // 元のtilesは変更されない
+        Assert.Equal(new TileList(man: "1234"), actual);
+    }
+
+    [Fact]
     public void GetIsolations()
     {
         // Arrange
         var tiles = new TileList(man: "25", pin: "15678", sou: "1369", honor: "124");
 
         // Act
-        var isolations = tiles.GetIsolations();
+        var actual = tiles.GetIsolations();
 
         // Assert
-        Assert.Equal(new TileList(man: "789", pin: "3", honor: "3567"), isolations);
+        Assert.Equal(new TileList(man: "789", pin: "3", honor: "3567"), actual);
+    }
+
+    [Fact]
+    public void ToString_()
+    {
+        // Arrange
+        var tiles = new TileList(Tile.All);
+
+        // Act
+        var actual = tiles.ToString();
+
+        // Assert
+        Assert.Equal("一二三四五六七八九(1)(2)(3)(4)(5)(6)(7)(8)(9)123456789東南西北白發中", actual);
     }
 
     [Fact]
@@ -251,6 +299,32 @@ public class TileListTest
 
         // Act
         var actual = tiles.Equals(other);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Fact]
+    public void Equals_objectバージョン()
+    {
+        // Arrange
+        object tiles = new TileList([Tile.Man1, Tile.Man2, Tile.Man3]);
+
+        // Act
+        var actual = new TileList(man: "123").Equals(tiles);
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Fact]
+    public void Equals_objectバージョン_null()
+    {
+        // Arrange
+        object? tiles = null;
+
+        // Act
+        var actual = new TileList(man: "123").Equals(tiles);
 
         // Assert
         Assert.False(actual);
