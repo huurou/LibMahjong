@@ -150,6 +150,7 @@ public record Tile : IComparable<Tile>
     public static IEnumerable<Tile> Pins { get; } = All.Where(x => x.IsPin);
     public static IEnumerable<Tile> Sous { get; } = All.Where(x => x.IsSou);
     public static IEnumerable<Tile> Honors { get; } = All.Where(x => x.IsHonor);
+    public static IEnumerable<Tile> Chuuchans{ get; } = All.Where(x => x.IsChuuchan);
     public static IEnumerable<Tile> Yaochuus { get; } = All.Where(x => x.IsYaochuu);
 
     /// <summary>

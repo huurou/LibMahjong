@@ -3,9 +3,15 @@ using System.Collections.Immutable;
 
 namespace LibMahjong.Tiles;
 
-public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<TileList>
+public record TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<TileList>
 {
     public int Count => tiles_.Count;
+    public bool IsAllMan => tiles_.All(x => x.IsMan);
+    public bool IsAllPin => tiles_.All(x => x.IsPin);
+    public bool IsAllSou => tiles_.All(x => x.IsSou);
+    public bool IsAllHonor => tiles_.All(x => x.IsHonor);
+    public bool IsAllWind => tiles_.All(x => x.IsWind);
+
     public Tile this[Index index] => tiles_[index];
     public TileList this[Range range]
     {
@@ -53,6 +59,51 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
         ]
     )
     {
+    }
+
+    public static TileList FromOneLine(string oneLine)
+    {
+        var man = "";
+        var pin = "";
+        var sou = "";
+        var honor = "";
+        var splitStart = 0;
+        for (var i = 0; i < oneLine.Length; i++)
+        {
+            if (oneLine[i] == 'm')
+            {
+                for (var j = splitStart; j < i; j++)
+                {
+                    man += oneLine[j];
+                }
+                splitStart = i + 1;
+            }
+            else if (oneLine[i] == 'p')
+            {
+                for (var j = splitStart; j < i; j++)
+                {
+                    pin += oneLine[j];
+                }
+                splitStart = i + 1;
+            }
+            else if (oneLine[i] == 's')
+            {
+                for (var j = splitStart; j < i; j++)
+                {
+                    sou += oneLine[j];
+                }
+                splitStart = i + 1;
+            }
+            else if (oneLine[i] == 'z')
+            {
+                for (var j = splitStart; j < i; j++)
+                {
+                    honor += oneLine[j];
+                }
+                splitStart = i + 1;
+            }
+        }
+        return new TileList(man: man, pin: pin, sou: sou, honor: honor);
     }
 
     public int CountOf(Tile tile)
@@ -105,21 +156,21 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
         return GetEnumerator();
     }
 
-    public bool Equals(TileList? other)
+    public virtual bool Equals(TileList? other)
     {
         return other is not null &&
             Count == other.Count &&
             (ReferenceEquals(this, other) || this.OrderBy(x => x).SequenceEqual(other.OrderBy(x => x)));
     }
 
-    public override bool Equals(object? obj)
-    {
-        return obj is TileList other && Equals(other);
-    }
-
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        var hashCode = new HashCode();
+        foreach (var tile in tiles_)
+        {
+            hashCode.Add(tile);
+        }
+        return hashCode.ToHashCode();
     }
 
     public int CompareTo(TileList? other)
@@ -132,16 +183,6 @@ public class TileList : IEnumerable<Tile>, IEquatable<TileList>, IComparable<Til
             if (this[i] < other[i]) { return -1; }
         }
         return Count.CompareTo(other.Count);
-    }
-
-    public static bool operator ==(TileList? left, TileList? right)
-    {
-        return left is null ? right is null : left.Equals(right);
-    }
-
-    public static bool operator !=(TileList? left, TileList? right)
-    {
-        return !(left == right);
     }
 
     public static bool operator <(TileList? left, TileList? right)
